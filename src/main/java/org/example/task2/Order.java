@@ -2,14 +2,26 @@ package org.example.task2;
 
 public class Order {
 
-    public long id;
-    public String customer;
+    private long id;
+    private String customer;
 
+    // конструктор створює замовлення
     public Order(long id, String customer) {
         this.id = id;
         this.customer = customer;
     }
 
+    // повертає id замовлення
+    public long getId() {
+        return this.id;
+    }
+
+    // повертає ім'я клієнта
+    public String getCustomer() {
+        return this.customer;
+    }
+
+    // формує текстовий рахунок для замовлення
     public String formOrderBill(Cart cart) {
 
         StringBuilder builder = new StringBuilder();
@@ -18,16 +30,18 @@ public class Order {
 
         double sum = 0.0;
 
-        for (int i = 0; i < cart.index; i++) {
+        // додаємо всі товари з корзини у рахунок
+        for (int i = 0; i < cart.getCurrentSize(); i++) {
+            Item currentItem = cart.getItem(i);
 
-            sum += cart.contents[i].price;
+            sum += currentItem.getPrice();
 
             builder.append("Item id: ");
-            builder.append(cart.contents[i].id);
+            builder.append(currentItem.getId());
             builder.append(" name: ");
-            builder.append(cart.contents[i].name);
+            builder.append(currentItem.getName());
             builder.append(" price: ");
-            builder.append(cart.contents[i].price);
+            builder.append(currentItem.getPrice());
             builder.append("\n");
         }
 
