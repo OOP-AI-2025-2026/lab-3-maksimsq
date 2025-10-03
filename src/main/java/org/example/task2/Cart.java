@@ -4,11 +4,13 @@ import java.util.Arrays;
 
 public class Cart {
 
-    public Item[] contents;
-    int index;
+    private Item[] contents; // масив для зберігання товарів
+    private int index; // поточна кількість товарів
 
-    Cart(Item[] _contents) {
-        this.contents = _contents;
+    // конструктор створює копію масиву товарів
+    public Cart(Item[] _contents) {
+        this.contents = Arrays.copyOf(_contents, _contents.length);
+        this.index = 0;
     }
 
     public void removeById(int itemIndex) {
@@ -40,7 +42,7 @@ public class Cart {
 
     public int findItemInArray(Item item) {
         for (int i = 0; i < index; i++) {
-            if (contents[i].id == item.id) {
+            if (contents[i].getId() == item.getId()) {
                 return i;
             }
         }
@@ -56,6 +58,20 @@ public class Cart {
         index++;
     }
 
+    // повертає кількість товарів у корзині
+    public int getCurrentSize() {
+        return this.index;
+    }
+
+    // повертає товар за індексом або null, якщо він некоректний
+    public Item getItem(int itemIndex) {
+        if (itemIndex < 0 || itemIndex >= this.index) {
+            return null;
+        }
+        return contents[itemIndex];
+    }
+
+    // перевіряє чи корзина заповнена
     public boolean isCartFull() {
         return index == contents.length;
     }
